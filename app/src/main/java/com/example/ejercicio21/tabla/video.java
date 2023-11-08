@@ -14,6 +14,7 @@ public class video {
     }
 
     public void setVideo(Blob video) {
+
         this.video = video;
     }
 }
