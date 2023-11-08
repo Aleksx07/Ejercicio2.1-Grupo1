@@ -97,39 +97,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
 
-        /*CAPTURAR VIDEO*/
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Uri videoUri = data.getData();
-            videoView.setMediaController((new MediaController(this)));
-            videoView.setVideoURI(videoUri); /*PASAR EL VIDEO AL VIDEOVIEW*/
-            videoView.requestFocus(); //Mostrar video
-            videoView.start();    // Reproducir el video
-            Toast.makeText(getApplicationContext(), "El video ha sido guardado en el storage exitosamente", Toast.LENGTH_LONG).show();
-        }
+            /* CAPTURAR VIDEO */
+            if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+                Uri videoUri = data.getData();
+                videoView.setMediaController(new MediaController(this));
+                videoView.setVideoURI(videoUri); /* PASAR EL VIDEO AL VIDEOVIEW */
+                videoView.requestFocus(); // Mostrar video
+                videoView.start(); // Reproducir el video
+                Toast.makeText(getApplicationContext(), "El video ha sido guardado en el storage exitosamente", Toast.LENGTH_LONG).show();
 
-        SQLiteConexion conexion = new SQLiteConexion(this, transacciones.NameDataBase,  null, 1);
+                SQLiteConexion conexion = new SQLiteConexion(this, transacciones.NameDataBase, null, 1);
 
-        btnguardar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*GUARDAR VIDEO EN LA BD*/
-                if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK){
-                    Uri uri = data.getData();
-                    SQLiteDatabase db = conexion.getWritableDatabase();
-                    ContentValues valores = new ContentValues();
-                    valores.put(transacciones.tablavideo, transacciones.video.equals(uri.getLastPathSegment()));
+                btnguardar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        /* GUARDAR VIDEO EN LA BD */
+                        SQLiteDatabase db = conexion.getWritableDatabase();
+                        ContentValues valores = new ContentValues();
+                        valores.put(transacciones.tablavideo, videoUri.toString()); // Guardar la URL del video
 
-                    Long resultado = db.insert(transacciones.tablavideo,transacciones.video, valores);
-                    Toast.makeText(getApplicationContext(), "El video ha sido guardado con exito" +" "+ "Numero de registro: "+resultado, Toast.LENGTH_LONG).show();
-                    db.close();
-                }
+                        long resultado = db.insert(transacciones.tablavideo, null, valores);
+                        Toast.makeText(getApplicationContext(), "El video ha sido guardado con éxito. Número de registro: " + resultado, Toast.LENGTH_LONG).show();
+                        db.close();
+                    }
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), "Error al capturar el video", Toast.LENGTH_LONG).show();
             }
-        });
-
-
+        }
     }
-}

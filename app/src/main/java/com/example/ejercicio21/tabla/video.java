@@ -1,19 +1,17 @@
 package com.example.ejercicio21.tabla;
 
-import java.sql.Blob;
-
 public class video {
-    private Blob video;
+    private String video;
 
     public video() {
         // Constructor sin argumentos
     }
 
-    public Blob getVideo() {
+    public String getVideo() {
         return video;
     }
 
-    public void setVideo(Blob video) {
+    public void setVideo(String video) {
 
         this.video = video;
     }
