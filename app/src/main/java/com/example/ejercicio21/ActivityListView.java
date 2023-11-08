@@ -54,6 +54,8 @@ public class ActivityListView extends AppCompatActivity {
         obtenerLista();
     }
 
+
+
     private void obtenerLista() {
         listaInformacion = new ArrayList<String>();
         for (int i = 0; i < listavideo.size(); i++){
