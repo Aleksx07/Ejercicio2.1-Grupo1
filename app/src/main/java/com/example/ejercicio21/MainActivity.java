@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
+
+
             Toast.makeText(getApplicationContext(), "Se necesitan permisos de acceso a la camara", Toast.LENGTH_LONG).show();
         }
     }
