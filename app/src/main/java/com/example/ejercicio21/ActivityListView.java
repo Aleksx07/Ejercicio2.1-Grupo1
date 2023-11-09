@@ -3,10 +3,13 @@ package com.example.ejercicio21;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -34,9 +37,26 @@ public class ActivityListView extends AppCompatActivity {
 
         try {
             consultarLista();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Obtiene la URL del video seleccionado
+                String videoUrl = listavideo.get(position).getVideo();
+
+                // Crea un Intent para abrir la nueva actividad (reproductor de video)
+                Intent intent = new Intent(ActivityListView.this, verVideo.class);
+                intent.putExtra("video_url", videoUrl);
+
+                // Inicia la nueva actividad
+                startActivity(intent);
+            }
+        });
     }
 
     private void consultarLista() {
@@ -74,4 +94,5 @@ public class ActivityListView extends AppCompatActivity {
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaInformacion);
         lista.setAdapter(adaptador);
     }
+
 }

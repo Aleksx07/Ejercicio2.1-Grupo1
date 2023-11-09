@@ -43,6 +43,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ejercicio21">
         <activity
+            android:name=".verVideo"
+            android:exported="false" />
+        <activity
             android:name=".ActivityListView"
             android:exported="false" />
         <activity
